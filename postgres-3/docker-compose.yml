@@ -1,0 +1,22 @@
+services:
+  postgres-3:
+    image: postgres:16.6
+    container_name: postgres-3
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgresdb
+      PGDATA: /data
+    volumes:
+      - ./pgdata:/data
+      - ./config:/config
+      - ./archive:/mnt/server/archive
+    command: postgres -c 'config_file=/config/postgresql.conf'
+    ports:
+      - "5434:5432"
+    networks:
+      - postgres
+networks:
+  postgres:
+    external: true
